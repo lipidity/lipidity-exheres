@@ -1,0 +1,17 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require pdfgrep
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.12 ] ]
+require zsh-completion
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES+="build: app-doc/asciidoc"
+
+src_install(){
+    default
+    dozshcompletion completion/_pdfgrep
+}
+
