@@ -1,0 +1,44 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+export_exlib_phases src_configure
+
+SUMMARY="Powerful mail handling system based on MH"
+#DESCRIPTION=""
+HOMEPAGE="http://www.nongnu.org/nmh/"
+if ever is_scm ; then
+    SCM_REPOSITORY="git://git.savannah.nongnu.org/nmh.git"
+    DOWNLOADS=""
+    require scm-git
+else
+    DOWNLOADS="http://download.savannah.nongnu.org/releases/${PN}/${PNV}.tar.gz"
+fi
+
+UPSTREAM_CHANGELOG="http://savannah.nongnu.org/news/?group=nmh"
+
+LICENCES="BSD-3"
+SLOT="0"
+MYOPTIONS="
+    ssl  [[ description = [ Enable encryption for SMTP via STARTTLS ] ]]
+    sasl   [[ description = [ SASL authentication support ] ]]
+    readline [[ description = [ Use readline for line editing and history in WhatNow? prompt ] ]]
+"
+DEPENDENCIES="
+    build+run:
+        sys-libs/ncurses
+        readline? ( sys-libs/readline )
+        sasl? ( net-libs/cyrus-sasl )
+        ssl? ( dev-libs/openssl )
+"
+
+nmh_src_configure() {
+# use flock to play nice with the mutt package
+    econf --prefix=/usr \
+          --libdir=/usr/lib/${PN} \
+          --sysconfdir=/etc/${PN} \
+          --with-locking=flock \
+          $(option_with sasl cyrus-sasl) \
+          $(option_with ssl tls) \
+          $(option_with readline)
+}
+

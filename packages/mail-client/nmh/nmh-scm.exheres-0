@@ -1,0 +1,18 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require nmh
+
+PLATFORMS="~amd64 ~x86"
+
+DEPENDENCIES="
+    build:
+        sys-devel/autoconf
+        sys-devel/automake
+"
+
+src_configure(){
+    ./autogen.sh
+    default
+}
+
