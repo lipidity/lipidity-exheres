@@ -1,0 +1,21 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License
+
+FONT=${PN}
+
+require xfont github [ user=w0ng pn=googlefontdirectory ]
+
+SUMMARY="Fonts from Google Web Fonts"
+HOMEPAGE="http://code.google.com/p/googlefontdirectory/"
+
+LICENCES="OFL-1.1 Apache-2.0"
+SLOT="0"
+PLATFORMS="~amd64 ~arm ~ppc64 ~x86"
+
+src_install() {
+    default
+
+    insinto /usr/share/fonts/X11/${FONT}
+    doins fonts/*.ttf
+}
+
