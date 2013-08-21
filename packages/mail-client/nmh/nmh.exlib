@@ -19,16 +19,15 @@ UPSTREAM_CHANGELOG="http://savannah.nongnu.org/news/?group=nmh"
 LICENCES="BSD-3"
 SLOT="0"
 MYOPTIONS="
-    ssl  [[ description = [ Enable encryption for SMTP via STARTTLS ] ]]
     sasl   [[ description = [ SASL authentication support ] ]]
     readline [[ description = [ Use readline for line editing and history in WhatNow? prompt ] ]]
 "
 DEPENDENCIES="
     build+run:
+        dev-libs/openssl
         sys-libs/ncurses
         readline? ( sys-libs/readline )
         sasl? ( net-libs/cyrus-sasl )
-        ssl? ( dev-libs/openssl )
 "
 
 nmh_src_configure() {
@@ -37,8 +36,8 @@ nmh_src_configure() {
           --libdir=/usr/lib/${PN} \
           --sysconfdir=/etc/${PN} \
           --with-locking=flock \
+          --enable-tls \
           $(option_with sasl cyrus-sasl) \
-          $(option_with ssl tls) \
           $(option_with readline)
 }
 

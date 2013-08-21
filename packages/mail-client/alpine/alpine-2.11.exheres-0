@@ -28,7 +28,6 @@ MYOPTIONS="
     passfile [[ description = [ Store password for convenience - INSECURE ] ]]
     smime [[ description = [ S/MIME public key encryption/signing  ] ]]
     spell
-    ssl
     threads
 "
 
@@ -44,10 +43,10 @@ MYOPTIONS="
 
 DEPENDENCIES="
     build+run:
+        dev-libs/openssl[>=1.0.0c]
         sys-libs/ncurses[>=5.1]
         sys-libs/pam
         kerberos? ( app-crypt/heimdal )
-        ssl? ( dev-libs/openssl[>=1.0.0c] )
         ldap? ( net-directory/openldap )
     run:
         spell? ( app-spell/aspell )
@@ -61,7 +60,7 @@ src_configure() {
         $(option passfile && echo "--with-passfile=.pinepwd") \
         $(option_with threads pthread) \
         $(option_with kerberos krb5) \
-        $(option_with ssl) \
+        --with-ssl \
         $(option_with ldap) \
         $(option_with smime) \
         $(option_with ipv6) \
