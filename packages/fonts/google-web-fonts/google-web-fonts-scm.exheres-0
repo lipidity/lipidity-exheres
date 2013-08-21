@@ -10,7 +10,7 @@ HOMEPAGE="http://code.google.com/p/googlefontdirectory/"
 
 LICENCES="OFL-1.1 Apache-2.0"
 SLOT="0"
-PLATFORMS="~amd64 ~arm ~ppc64 ~x86"
+PLATFORMS="~amd64"
 
 src_install() {
     default

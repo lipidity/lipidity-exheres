@@ -17,7 +17,7 @@ UPSTREAM_DOCUMENTATION="
 ${HOMEPAGE}/manpage.html   [[ description = [ Man page ] ]]
 "
 
-LICENCES="GPLv3"
+LICENCES="GPL-3"
 SLOT="0"
 # TODO MYOPTIONS="unac [[ description = [ Use libunac ] ]]"
 MYOPTIONS=""
