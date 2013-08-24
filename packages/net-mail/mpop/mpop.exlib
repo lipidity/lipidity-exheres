@@ -4,9 +4,9 @@
 #   Copyright 2008-2009 Vöröskői András <voroskoi@gmail.com>
 #   Copyright 2009 Saleem Abdulrasool <compnerd@compnerd.org>
 
-export_exlib_phases src_configure src_install
-
 require sourceforge
+
+export_exlib_phases src_configure src_install
 
 SUMMARY="mpop is a pop client"
 DESCRIPTION="
