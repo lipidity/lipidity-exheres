@@ -1,7 +1,7 @@
 # Copyright 2013 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge
+require sourceforge [ suffix=tar.gz ]
 
 SUMMARY="Search for text in pdf files"
 #DESCRIPTION=""
@@ -10,8 +10,6 @@ if ever is_scm ; then
     SCM_REPOSITORY="git://gitorious.org/pdfgrep/pdfgrep.git"
     DOWNLOADS=""
     require scm-git
-else
-    DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.gz"
 fi
 
 UPSTREAM_DOCUMENTATION="
