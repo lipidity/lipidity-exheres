@@ -1,18 +1,10 @@
 # Copyright 2013 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
+AT_M4DIR=( m4 )
+
 require nmh
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.12 1.13 1.14 ] need_libtool=false ]
 
 PLATFORMS="~amd64"
-
-DEPENDENCIES="
-    build:
-        sys-devel/autoconf
-        sys-devel/automake
-"
-
-src_configure(){
-    ./autogen.sh
-    default
-}
 
