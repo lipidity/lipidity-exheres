@@ -6,13 +6,12 @@
 
 export_exlib_phases src_configure src_install
 
+require sourceforge
+
 SUMMARY="mpop is a pop client"
 DESCRIPTION="
 Receives mail from a POP server (for example at a free mail provider).
 "
-HOMEPAGE="http://mpop.sourceforge.net/"
-DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.bz2"
-REMOTE_IDS="sourceforge:${PN}"
 
 UPSTREAM_CHANGELOG="http://sourceforge.net/p/mpop/code/ci/master/tree/ChangeLog?format=raw"
 UPSTREAM_DOCUMENTATION="http://mpop.sourceforge.net/documentation.html"
