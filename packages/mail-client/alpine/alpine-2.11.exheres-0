@@ -79,7 +79,6 @@ src_install() {
         dodoc imap/docs/rfc/*.txt
         docinto html/tech-notes
         dodoc doc/tech-notes/*.html
-    docinto
     fi
     default
 }
