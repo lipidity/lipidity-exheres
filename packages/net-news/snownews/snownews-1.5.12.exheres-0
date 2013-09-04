@@ -13,9 +13,9 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     build:
-        dev-lang/perl
+        dev-lang/perl:*
     build+run:
-        dev-libs/libxml2
+        dev-libs/libxml2:2.0
         dev-libs/openssl
         sys-devel/gettext
         sys-libs/ncurses[>=5]
@@ -24,11 +24,11 @@ DEPENDENCIES="
 "
 
 src_prepare(){
-    sed -i -e 's/$(INSTALL) -s/$(INSTALL)/' Makefile
+    edo sed -i -e 's/$(INSTALL) -s/$(INSTALL)/' Makefile
 }
 
 src_configure(){
-    ./configure --prefix=/usr # custom configure script
+    edo ./configure --prefix=/usr # custom configure script
 }
 
 DEFAULT_SRC_COMPILE_PARAMS=(EXTRA_LDFLAGS=${LDFLAGS} EXTRA_CFLAGS=${CFLAGS})

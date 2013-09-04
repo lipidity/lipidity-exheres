@@ -1,8 +1,6 @@
 # Copyright 2013 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
-export_exlib_phases src_configure
-
 SUMMARY="Powerful mail handling system based on MH"
 #DESCRIPTION=""
 HOMEPAGE="http://www.nongnu.org/nmh/"
@@ -30,14 +28,7 @@ DEPENDENCIES="
         sasl? ( net-libs/cyrus-sasl )
 "
 
-nmh_src_configure() {
 # use flock to play nice with the mutt package
-    econf --prefix=/usr \
-          --libdir=/usr/lib/${PN} \
-          --sysconfdir=/etc/${PN} \
-          --with-locking=flock \
-          --enable-tls \
-          $(option_with sasl cyrus-sasl) \
-          $(option_with readline)
-}
+DEFAULT_SRC_CONFIGURE_PARAMS=(--sysconfdir=/etc/${PN} --with-locking=flock --enable-tls)
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=('sasl cyrus-sasl' readline)
 

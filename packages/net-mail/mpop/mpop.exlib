@@ -6,7 +6,7 @@
 
 require sourceforge
 
-export_exlib_phases src_configure src_install
+export_exlib_phases src_install
 
 SUMMARY="mpop is a pop client"
 DESCRIPTION="
@@ -38,13 +38,9 @@ DEPENDENCIES="
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=( doc/mpoprc.example )
 
-mpop_src_configure() {
-    econf --enable-nls \
-          --with-ssl=$(optionv gnutls || echo openssl) \
-          $(option_with gsasl libgsasl) \
-          $(option_with idn libidn) \
-          $(option_with keyring gnome-keyring)
-}
+DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-nls )
+DEFAULT_SRC_CONFIGURE_OPTIONS=( 'gnutls --with-ssl=gnutls --with-ssl=openssl' )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( 'gsasl libgsasl' 'idn libidn' 'keyring gnome-keyring' )
 
 mpop_src_install() {
     default
