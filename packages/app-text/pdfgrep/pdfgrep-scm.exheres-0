@@ -8,7 +8,7 @@ require zsh-completion
 
 PLATFORMS="~amd64"
 
-DEPENDENCIES+="build: app-doc/asciidoc"
+DEPENDENCIES="build: app-doc/asciidoc"
 
 src_install(){
     default

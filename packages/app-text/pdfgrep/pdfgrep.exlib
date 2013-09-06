@@ -4,7 +4,6 @@
 require sourceforge [ suffix=tar.gz ]
 
 SUMMARY="Search for text in pdf files"
-#DESCRIPTION=""
 
 if ever is_scm ; then
     SCM_REPOSITORY="git://gitorious.org/pdfgrep/pdfgrep.git"

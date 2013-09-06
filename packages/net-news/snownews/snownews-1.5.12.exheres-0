@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SUMMARY="Text mode RSS newsreader"
-#DESCRIPTION=""
 HOMEPAGE="https://kiza.eu/software/${PN}/"
 DOWNLOADS="https://kiza.eu/media/software/${PN}/${PNV}.tar.gz"
 

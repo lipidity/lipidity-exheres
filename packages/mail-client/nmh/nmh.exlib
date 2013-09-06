@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 SUMMARY="Powerful mail handling system based on MH"
-#DESCRIPTION=""
 HOMEPAGE="http://www.nongnu.org/nmh/"
 if ever is_scm ; then
     SCM_REPOSITORY="git://git.savannah.nongnu.org/nmh.git"
@@ -17,8 +16,8 @@ UPSTREAM_CHANGELOG="http://savannah.nongnu.org/news/?group=nmh"
 LICENCES="BSD-3"
 SLOT="0"
 MYOPTIONS="
-    sasl   [[ description = [ SASL authentication support ] ]]
     readline [[ description = [ Use readline for line editing and history in WhatNow? prompt ] ]]
+    sasl [[ description = [ SASL authentication support ] ]]
 "
 DEPENDENCIES="
     build+run:
