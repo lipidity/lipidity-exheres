@@ -1,0 +1,53 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'sshuttle-0.61.ebuild' from Gentoo, which is:
+#     Copyright 1999-2012 Gentoo Foundation
+
+require github [ user=apenwarr ]
+# TODO figure out how python dependencies work
+require python [ python_dep='[>=2.7]' ]
+
+SUMMARY="Transparent proxy server that works as a poor man's VPN; doesn't require admin; supports DNS tunneling."
+DESCRIPTION="sshuttle is not exactly a VPN, and not exactly port forwarding. It's kind of both, and kind of neither.
+It's like a VPN, since it can forward every port on an entire network, not just ports you specify.
+Conveniently, it lets you use the \"real\" IP addresses of each host rather than faking port numbers on localhost.
+On the other hand, the way it works is more like ssh port forwarding than a VPN. Normally, a VPN forwards your data
+one packet at a time, and doesn't care about individual connections; ie. it's \"stateless\" with respect to the traffic.
+sshuttle is the opposite of stateless; it tracks every single connection."
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-python/Markdown
+        dev-python/BeautifulSoup
+    run:
+        net-firewall/iptables
+        || (
+            app-admin/sudo
+            sys-apps/shadow
+        )
+"
+# CONFIG_CHECK="~NETFILTER_XT_TARGET_HL ~IP_NF_TARGET_REDIRECT ~NF_NAT"
+
+src_install(){
+    edo rm stresstest.py
+
+    insinto "$(python_get_sitedir)"/${PN}
+    doins -r *.py compat
+    insinto "$(python_get_sitedir)"/${PN}/version
+    doins version/*.py
+
+    exeinto "$(python_get_sitedir)"/${PN}
+    doexe ${PN}
+    dodir /usr/bin
+    dosym "$(python_get_sitedir)"/${PN}/${PN} /usr/bin/${PN}
+
+    doman Documentation/${PN}.8
+
+    python_bytecompile
+}
+
