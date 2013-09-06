@@ -5,7 +5,7 @@
 
 require github [ user=apenwarr ]
 # TODO figure out how python dependencies work
-require python [ python_dep='[>=2.7]' ]
+require python [ python_dep='[>=2.6]' ]
 
 SUMMARY="Transparent proxy server that works as a poor man's VPN; doesn't require admin; supports DNS tunneling."
 DESCRIPTION="sshuttle is not exactly a VPN, and not exactly port forwarding. It's kind of both, and kind of neither.
@@ -27,8 +27,8 @@ DEPENDENCIES="
     run:
         net-firewall/iptables
         || (
-            app-admin/sudo
-            sys-apps/shadow
+            net/dropbear
+            net-misc/openssh
         )
 "
 # CONFIG_CHECK="~NETFILTER_XT_TARGET_HL ~IP_NF_TARGET_REDIRECT ~NF_NAT"
