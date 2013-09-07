@@ -1,0 +1,29 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ pnv=${PN}_${PV} suffix=orig.tar.gz ]
+
+SUMMARY="A hybrid between a 'make' utility and a shell script language."
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+    build+run:
+"
+
+src_prepare(){
+    edo sed -e '/^#define LIBDIR/s/\/lib\//\/'${LIBDIR}'\//' -i INSTALL.im
+}
+
+src_compile(){
+    edo ./icm_bootstrap /
+}
+
+src_install(){
+    edo ./icm_install all "${IMAGE}"
+}
+
