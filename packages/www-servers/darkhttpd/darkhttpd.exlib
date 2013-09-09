@@ -1,0 +1,20 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+export_exlib_phases src_install
+
+SUMMARY="Simple static web server"
+HOMEPAGE="http://unix4lyfe.org/${PN}/"
+DOWNLOADS="${HOMEPAGE}${PNV}.tar.bz2"
+
+LICENCES="BSD-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+darkhttpd_src_install(){
+    exeinto /usr/bin
+    doexe darkhttpd
+}
+
