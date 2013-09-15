@@ -1,0 +1,35 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ project=suspend ]
+
+SUMMARY="µswsusp: suspend and hibernation utilities in userspace"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS="
+    gcrypt [[ description = [ for image encryption ] ]]
+    threads
+"
+# TODO doc
+
+DEPENDENCIES="
+    build:
+        sys-apps/pciutils[>=2.2.4]
+    build+run:
+        app-arch/lzo:2
+        dev-libs/libx86
+        gcrypt? ( dev-libs/libgcrypt )
+"
+# unwritten:
+# libsplashy and splashutils for user space splash
+
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'gcrypt encrypt' threads )
+
+export_exlib_phases pkg_preinst
+
+suspend-utils_pkg_preinst(){
+    edo rmdir "${IMAGE}/dev"
+    default
+}
+

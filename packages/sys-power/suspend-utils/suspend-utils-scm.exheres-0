@@ -1,0 +1,12 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require suspend-utils
+
+SCM_REPOSITORY="git://git.kernel.org/pub/scm/linux/kernel/git/rafael/${PN}.git"
+require scm-git
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 ] ]
+
+PLATFORMS="~amd64"
+
