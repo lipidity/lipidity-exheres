@@ -13,3 +13,6 @@ MYOPTIONS=""
 
 DEPENDENCIES=""
 
+# requires http://testrun.org/tox/latest/
+RESTRICT="test"
+
