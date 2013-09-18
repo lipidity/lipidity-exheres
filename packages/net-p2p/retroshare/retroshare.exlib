@@ -1,0 +1,76 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=tar.gz ] qmake4 gtk-icon-cache freedesktop-desktop
+
+export_exlib_phases src_configure src_compile src_install
+
+SUMMARY="A decentralized, private and secure commmunication and sharing platform."
+DESCRIPTION="
+RetroShare is basically a platform that establishes encrypted connections between authenticated friends.
+This connection is used for various communication services and filesharing. It is independent of
+any corporate system or central servers, all data is only sent to friends and in some cases
+relayed by them to their friends, making RetroShare a decentralised Social Sharing Network
+designed For the People. Encrypted communication ensures that all shared information is only
+known to you and your friends.
+
+Communication services in RetroShare:
+    Private chat with friends
+    Private or public chat lobbies, that allow chatting with friends and friends of friends
+    Messages to friends
+    Forums
+    Voice over IP 
+"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+    build+run:
+        dev-libs/openssl
+        gnome-desktop/libgnome-keyring:1
+        net-libs/libupnp
+        x11-libs/libXScrnSaver
+        x11-libs/qt:4
+"
+
+WORK=${WORKBASE}/${PNV%[a-z]}/src
+
+RS_SRC_DIRS=( libbitdht openpgpsdk libretroshare retroshare-gui )
+
+retroshare_src_configure(){ 
+    for dir in ${RS_SRC_DIRS[@]} ; do
+        edo pushd ${dir}/src
+        eqmake4 ${dir}.pro
+        popd
+    done
+}
+
+retroshare_src_compile() {
+    for dir in ${RS_SRC_DIRS[@]} ; do
+        emake -C ${dir}/src
+    done
+}
+
+retroshare_src_install() {
+    dobin retroshare-gui/src/RetroShare
+
+    insinto /usr/share/RetroShare
+    # used to bootstrap DHT
+    doins libbitdht/src/bitdht/bdboot.txt
+    # skins
+    doins -r retroshare-gui/src/qss
+
+    # icon
+    insinto /usr/share/pixmaps
+    #doins data/${PN}.png
+    doins data/${PN}.xpm
+
+    # desktop file
+    insinto /usr/share/applications
+    doins data/${PN}.desktop
+}
+
