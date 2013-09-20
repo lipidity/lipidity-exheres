@@ -1,7 +1,11 @@
 # Copyright 2013 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=tar.gz ] qmake4 gtk-icon-cache freedesktop-desktop
+require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=tar.gz ] qmake4
+
+if ! ever is_scm ; then
+    require gtk-icon-cache freedesktop-desktop
+fi
 
 if ever is_scm ; then
     SCM_REPOSITORY="svn://svn.code.sf.net/p/${PN}/code"
@@ -71,13 +75,15 @@ retroshare_src_install() {
     # skins
     doins -r retroshare-gui/src/qss
 
-    # icon
-    insinto /usr/share/pixmaps
-    #doins data/${PN}.png
-    doins data/${PN}.xpm
+    if ! ever is_scm; then
+        # icon
+        insinto /usr/share/pixmaps
+        #doins data/${PN}.png
+        doins data/${PN}.xpm
 
-    # desktop file
-    insinto /usr/share/applications
-    doins data/${PN}.desktop
+        # desktop file
+        insinto /usr/share/applications
+        doins data/${PN}.desktop
+    fi
 }
 
