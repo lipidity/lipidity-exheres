@@ -3,6 +3,11 @@
 
 require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=tar.gz ] qmake4 gtk-icon-cache freedesktop-desktop
 
+if ever is_scm ; then
+    SCM_REPOSITORY="svn://svn.code.sf.net/p/${PN}/code"
+    require scm-svn
+fi
+
 export_exlib_phases src_configure src_compile src_install
 
 SUMMARY="A decentralized, private and secure commmunication and sharing platform."
@@ -37,7 +42,9 @@ DEPENDENCIES="
         x11-libs/qt:4
 "
 
-WORK=${WORKBASE}/${PNV%[a-z]}/src
+if ! ever is_scm; then
+    WORK=${WORKBASE}/${PNV%[a-z]}/src
+fi
 
 RS_SRC_DIRS=( libbitdht openpgpsdk libretroshare retroshare-gui )
 
