@@ -1,7 +1,7 @@
 # Copyright 2013 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=tar.gz ] qmake4
+require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=zip ] qmake4
 
 if ! ever is_scm ; then
     require gtk-icon-cache freedesktop-desktop
