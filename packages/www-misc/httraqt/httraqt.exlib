@@ -1,0 +1,21 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ suffix=tar.gz ]
+
+WORK="${WORKBASE}/${PN}"
+
+require cmake [ api=2 ]
+
+SUMMARY="Graphical user interface for HTTrack library"
+
+LICENCES="GPL-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        www-client/httrack
+        x11-libs/qt:4
+"
+
