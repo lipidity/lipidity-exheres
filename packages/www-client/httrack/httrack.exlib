@@ -1,0 +1,18 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="HTTrack Website Copier, Open Source Offline Browser"
+HOMEPAGE="http://www.httrack.com/"
+DOWNLOADS="http://mirror.httrack.com/historical/${PNV}.tar.gz"
+
+LICENCES="GPL-3"
+SLOT="0"
+
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/openssl
+        sys-libs/zlib
+"
+
