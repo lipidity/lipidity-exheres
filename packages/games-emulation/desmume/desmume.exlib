@@ -1,0 +1,31 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require sourceforge [ suffix=tar.gz ]
+
+SUMMARY="Nintendo DS emulator"
+HOMEPAGE="http://desmume.org/"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-util/intltool
+    build+run:
+        dev-libs/glib[>=2.8.0]
+        dev-libs/libpcap
+        dev-libs/zziplib
+        media-libs/SDL
+        media-libs/soundtouch
+        sys-libs/zlib
+        sys-sound/alsa-lib
+        x11-dri/glu
+        x11-dri/mesa
+        x11-libs/agg
+        x11-libs/gtk+:2[>=2.14.0]
+"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(--enable-osmesa --enable-wifi)
+
