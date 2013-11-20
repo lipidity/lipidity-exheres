@@ -3,7 +3,11 @@
 
 require googlecode scons
 
-SUMMARY="High performance HTTP client library built upon the Apache Portable Runtime (APR) library"
+SUMMARY="High performance HTTP client library"
+DESCRIPTION="
+The serf library is an asynchronous, high performance C-based HTTP client library
+built upon the Apache Portable Runtime (APR) library.
+"
 
 LICENCES="Apache-2.0"
 SLOT="0"
