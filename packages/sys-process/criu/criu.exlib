@@ -1,0 +1,39 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="Checkpoint/Restore In Userspace"
+HOMEPAGE="http://criu.org/"
+DOWNLOADS="http://download.openvz.org/${PN}/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        app-doc/asciidoc
+        app-text/xmlto
+    build+run:
+        dev-libs/protobuf-c
+"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/glibc-ptrace-define.patch )
+
+DEFAULT_SRC_COMPILE_PARAMS=(
+    CC=${CC}
+    LD=$( [[ $(eclectic ld show) == gold ]] && echo ld.bfd || echo $LD )
+    RAW_LDFLAGS=$(raw-ldflags)
+)
+
+DEFAULT_SRC_INSTALL_PARAMS=( PREFIX=/usr )
+
+export_exlib_phases src_prepare
+
+criu_src_prepare(){
+    default
+	edo sed -i 's/LDFLAGS/RAW_LDFLAGS/g' scripts/Makefile.build
+}
+
+# needs CAP_SYS_RESOURCE
+RESTRICT="test"
+
