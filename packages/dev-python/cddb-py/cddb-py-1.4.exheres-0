@@ -1,0 +1,17 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+MY_PN=CDDB
+
+require sourceforge [ suffix=tar.gz project=${PN} ]
+require setup-py [ import=distutils blacklist='3' work=${MY_PN}-${PV} ]
+
+SUMMARY="Access online databases of audio CD track titles and information"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
