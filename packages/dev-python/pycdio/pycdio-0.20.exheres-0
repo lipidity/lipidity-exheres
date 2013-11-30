@@ -1,0 +1,23 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require pypi
+require setup-py [ import=setuptools blacklist='3' test=nose ]
+
+SUMMARY="Python OO interface to libcdio (CD Input and Control library)"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        virtual/pkg-config
+        dev-lang/swig
+    build+run:
+        dev-libs/libcdio
+"
+
+RESTRICT="test"
+
