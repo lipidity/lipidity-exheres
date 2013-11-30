@@ -1,0 +1,63 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+AT_M4DIR=( m4 )
+
+SCM_SECONDARY_REPOSITORIES='flog command deps musicbrainzngs'
+
+SCM_flog_REPOSITORY='git://github.com/Flumotion/flog'
+SCM_command_REPOSITORY='git://github.com/thomasvs/python-command'
+SCM_deps_REPOSITORY='git://github.com/thomasvs/python-deps'
+SCM_musicbrainzngs_REPOSITORY='git://github.com/thomasvs/python-musicbrainz-ngs'
+
+SCM_EXTERNAL_REFS='
+    morituri/extern/flog:flog
+    morituri/extern/python-command:command
+    morituri/extern/python-deps:deps
+    morituri/extern/python-musicbrainz-ngs:musicbrainzngs
+'
+
+require github [ user=thomasvs rev=v${PV} ]
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 ] ]
+require python [ blacklist='3' min_versions='2.3' has_bin=true has_lib=true multibuild=false ]
+
+if ! ever is_scm; then
+    WORK="${WORKBASE}/${PNV}"
+#    DOWNLOADS="http://thomas.apestaart.org/download/morituri/${PNV}.tar.bz2"
+fi
+
+SUMMARY="A CD ripper preferring accuracy over speed"
+
+LICENCES="GPL-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-cdr/cdrdao[>=1.2.3]
+        dev-python/gst-python:0.10
+        dev-python/pyxdg
+        dev-python/setuptools
+        gnome-bindings/pygobject:2
+        media/cdparanoia
+        media-libs/gstreamer:0.10
+        media-plugins/gst-plugins-base:0.10[>=0.10.22]
+        media-plugins/gst-plugins-good:0.10[>=0.10.16]
+"
+
+REMOTE_IDS="freecode:${PN}"
+
+export_exlib_phases src_prepare
+
+morituri_src_prepare(){
+    edo sed -e 's/\/lib\//\/'${LIBDIR}'\//' -i ./configure.ac
+
+    # disable bash completion
+    edo sed -e '/SUBDIRS/s/ etc//' -i ./Makefile.am
+
+    autotools_src_prepare
+}
+
+# needs pychecker
+RESTRICT="test"
+
