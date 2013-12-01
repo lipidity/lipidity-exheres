@@ -1,0 +1,15 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user=alastair pn=python-${PN} rev=v${PV} ]
+require pypi
+require setup-py [ import=distutils blacklist='3' ]
+
+SUMMARY="Python bindings for musicbrainz NGS webservice"
+
+LICENCES="BSD-2 ISC"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
