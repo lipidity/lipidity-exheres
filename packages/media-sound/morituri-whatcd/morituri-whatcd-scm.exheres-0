@@ -1,0 +1,16 @@
+# Copyright 2013 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user=supermanvelo ]
+
+require setup-py [ import=setuptools blacklist='3' min_versions='2.3' has_bin=true has_lib=true multibuild=false ]
+
+SUMMARY="Morituri plugin for What.CD-compatible logging"
+
+LICENCES="GPL-3"
+SLOT="0"
+MYOPTIONS=""
+DEPENDENCIES="media-sound/morituri"
+
+PLATFORMS="~amd64"
+
