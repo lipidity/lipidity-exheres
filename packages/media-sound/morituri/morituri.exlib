@@ -30,19 +30,22 @@ SUMMARY="A CD ripper preferring accuracy over speed"
 
 LICENCES="GPL-3"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="mp3"
 
 DEPENDENCIES="
     build+run:
         app-cdr/cdrdao[>=1.2.3]
         dev-python/gst-python:0.10
+        dev-python/pycdio [[ description = [ To find drive offset ] ]]
         dev-python/pyxdg
         dev-python/setuptools
-        gnome-bindings/pygobject:2
         media/cdparanoia
         media-libs/gstreamer:0.10
         media-plugins/gst-plugins-base:0.10[>=0.10.22]
-        media-plugins/gst-plugins-good:0.10[>=0.10.16]
+        media-plugins/gst-plugins-good:0.10[>=0.10.16] [[ description = [ For FLAC and taglib ] ]]
+        mp3? ( media-plugins/gst-plugins-ugly:0.10 )
+    recommendation:
+        dev-python/cddb-py [[ description = [ For showing but not using CDDB info if not in musicbrainz ] ]]
 "
 
 REMOTE_IDS="freecode:${PN}"
