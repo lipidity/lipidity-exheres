@@ -42,6 +42,8 @@ DEPENDENCIES="
         mp3? ( media-plugins/gst-plugins-ugly:0.10 )
     recommendation:
         dev-python/cddb-py [[ description = [ For showing but not using CDDB info if not in musicbrainz ] ]]
+    suggestion:
+        media-sound/morituri-whatcd [[ description = [ For What.CD-compatible logging ] ]]
 "
 
 REMOTE_IDS="freecode:${PN}"
