@@ -1,31 +1,53 @@
 # Copyright 2013 Ankur Kothari
+# Copyright 2015 Wouter van Kesteren <woutershep@gmail.com>
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ suffix=tar.gz ]
+require sourceforge [ suffix=tar.gz ] freedesktop-desktop
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.15 ] ]
 
 SUMMARY="Nintendo DS emulator"
+DESCRIPTION="
+DeSmuME is software that allows you to emulate a Nintendo DS system. Think of
+it as a Swiss-Army knife for Nintendo DS emulation, giving you access to many
+powerful tools for testing DS features, from viewing ROM properties to managing
+Action Replay cheats. And best of all, this software is completely free and
+open-source.
+"
 HOMEPAGE="http://desmume.org/"
 
 LICENCES="GPL-2"
 SLOT="0"
 MYOPTIONS=""
 
+# NOTE: lua is checked for but not used
 DEPENDENCIES="
     build:
         dev-util/intltool
     build+run:
-        dev-libs/glib[>=2.8.0]
+        dev-libs/glib:2[>=2.8.0]
         dev-libs/libpcap
         dev-libs/zziplib
-        media-libs/SDL
+        media-libs/SDL:0
         media-libs/soundtouch
         sys-libs/zlib
         sys-sound/alsa-lib
         x11-dri/glu
         x11-dri/mesa
-        x11-libs/agg
         x11-libs/gtk+:2[>=2.14.0]
+        x11-libs/libX11
 "
 
-DEFAULT_SRC_CONFIGURE_PARAMS=(--enable-osmesa --enable-wifi)
+DEFAULT_SRC_CONFIGURE_PARAMS=(--enable-wifi)
+
+src_prepare() {
+    # https://sourceforge.net/p/desmume/patches/169/
+    edo sed -i -e '/AC_PROG_RANLIB/i AC_CHECK_TOOL([AR], [ar])' configure.ac
+    autotools_src_prepare
+}
+
+src_install() {
+    default
+    # these are for the glade ui we don't build
+    edo rm -r "${IMAGE}"/usr/$(exhost --target)/locale
+}
 
