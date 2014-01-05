@@ -12,10 +12,18 @@ LICENCES="OFL-1.1 Apache-2.0"
 SLOT="0"
 PLATFORMS="~amd64"
 
+src_prepare() {
+    default
+
+    # fix names collision
+    edo mv fonts/mrbedford/MrBedfor{t,d}-Regular.ttf
+    edo mv fonts/siamreap/Si{e,a}mreap.ttf
+}
+
 src_install() {
     default
 
     insinto /usr/share/fonts/X11/${FONT}
-    doins fonts/*.ttf
+    doins fonts/*/*.ttf
 }
 
