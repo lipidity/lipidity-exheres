@@ -1,0 +1,21 @@
+# Copyright 2014 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+MY_PV=$(ever replace 2 '-')
+require github [ user=bdpurcell rev=v$MY_PV ]
+
+SUMMARY="A wifi-protected-setup (WPS) brute force attack tool, similar to reaver"
+
+LICENCES="GPL-3 GPL-2 BSD"
+SLOT="0"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/libpcap
+        dev-libs/openssl
+"
+
+WORK="${WORKBASE}/${PN}-${MY_PV}/src"
+
+DEFAULT_SRC_INSTALL_PARAMS=( prefix=/usr )
+
