@@ -9,6 +9,7 @@ fi
 
 if ever is_scm ; then
     SCM_REPOSITORY="svn://svn.code.sf.net/p/${PN}/code"
+    SCM_BRANCH="v0.5.5"
     require scm-svn
 fi
 
