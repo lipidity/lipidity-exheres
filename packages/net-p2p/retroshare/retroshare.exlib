@@ -1,7 +1,7 @@
 # Copyright 2013 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=zip ] qmake4
+require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=zip ] qmake
 
 if ! ever is_scm ; then
     require gtk-icon-cache freedesktop-desktop
@@ -52,10 +52,10 @@ fi
 
 RS_SRC_DIRS=( libbitdht openpgpsdk libretroshare retroshare-gui )
 
-retroshare_src_configure(){ 
+retroshare_src_configure(){
     for dir in ${RS_SRC_DIRS[@]} ; do
         edo pushd ${dir}/src
-        eqmake4 ${dir}.pro
+        eqmake ${dir}.pro
         popd
     done
 }
