@@ -1,0 +1,31 @@
+# Copyright 2014 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require github [ user=tsgates ]
+
+SUMMARY="Mbox is a lightweight sandboxing mechanism that any user can use without special privileges in commodity operating systems."
+DESCRIPTION="
+Mbox introduces a novel sandbox usage model; when executing a program in the sandbox,
+Mbox prevents programs from modifying the host filesystem while giving them the
+impression that they are in fact making those modifications. Mbox achieves this
+by providing a layered sandbox filesystem and by interposing on system calls
+with ptrace and seccomp/BPF. At the end of program execution, the user can examine
+changes in the sandbox filesystem, and selectively commit them back to the host filesystem.
+"
+HOMEPAGE="https://pdos.csail.mit.edu/mbox/"
+
+LICENCES="BSD-3"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+WORK="${WORK}/src"
+
+export_exlib_phases src_prepare
+
+mbox_src_prepare(){
+    edo cp {.,}configsbox.h
+    default
+}
+
