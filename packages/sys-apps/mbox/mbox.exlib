@@ -18,7 +18,10 @@ LICENCES="BSD-3"
 SLOT="0"
 MYOPTIONS=""
 
-DEPENDENCIES=""
+DEPENDENCIES="
+    build+run:
+        dev-libs/openssl
+"
 
 WORK="${WORK}/src"
 
