@@ -20,12 +20,5 @@ DEPENDENCIES=""
 
 MUSL_PREFIX=/usr/musl
 
-export_exlib_phases src_prepare
-
-musl_src_prepare(){
-    # strip off DESTDIR prefix from symlink
-    sed -e 's/-D -l \$</-D -l \${<:$(DESTDIR)%=%}/' -i Makefile
-}
-
 DEFAULT_SRC_CONFIGURE_PARAMS=( --prefix=${MUSL_PREFIX} --syslibdir=/${LIBDIR} )
 
