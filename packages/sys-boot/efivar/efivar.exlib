@@ -1,7 +1,7 @@
 # Copyright 2013 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ user=vathpela rev=${PV} ]
+require github [ user=vathpela rev=efivar-${PV} ]
 require flag-o-matic
 
 export_exlib_phases src_compile
