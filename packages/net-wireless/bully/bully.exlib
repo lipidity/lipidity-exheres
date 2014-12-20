@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 MY_PV=$(ever replace 2 '-')
-require github [ user=bdpurcell rev=v$MY_PV ]
+require github [ user=bdpurcell tag=v$MY_PV ]
 
 SUMMARY="A wifi-protected-setup (WPS) brute force attack tool, similar to reaver"
 

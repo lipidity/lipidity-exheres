@@ -3,7 +3,7 @@
 # Based in part upon 'sshuttle-0.61.ebuild' from Gentoo, which is:
 #     Copyright 1999-2012 Gentoo Foundation
 
-require github [ user=apenwarr rev=${PNV} ]
+require github [ user=apenwarr tag=${PNV} ]
 
 require python [ blacklist=none min_versions='2.6' has_bin=true has_lib=true multibuild=false ]
 

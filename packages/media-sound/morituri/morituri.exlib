@@ -17,7 +17,7 @@ SCM_EXTERNAL_REFS='
     morituri/extern/python-musicbrainz-ngs:musicbrainzngs
 '
 
-require github [ user=thomasvs rev=v${PV} ]
+require github [ user=thomasvs tag=v${PV} ]
 
 AT_M4DIR=( m4 )
 require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 ] ]
