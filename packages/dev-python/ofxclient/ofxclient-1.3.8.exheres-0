@@ -1,0 +1,25 @@
+# Copyright 2015 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require pypi
+require setup-py [ import=setuptools test=nose ]
+
+SUMMARY="OFX client for dowloading transactions from banks"
+
+LICENCES="MIT"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+    build+run:
+        dev-python/argparse
+        dev-python/beautifulsoup4
+        dev-python/ofxparse[>0.8]
+        dev-python/ofxhome
+"
+# dev-python/keyring
+
+RESTRICT="test"
+

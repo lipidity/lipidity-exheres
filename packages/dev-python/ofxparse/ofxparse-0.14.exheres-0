@@ -1,0 +1,22 @@
+# Copyright 2015 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require pypi
+require setup-py [ import=setuptools test=nose ]
+
+SUMMARY="Automatically sync your bank's data with ledger"
+
+LICENCES="MIT"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+    build+run:
+        dev-python/beautifulsoup4
+        dev-python/six
+"
+
+RESTRICT="test"
+

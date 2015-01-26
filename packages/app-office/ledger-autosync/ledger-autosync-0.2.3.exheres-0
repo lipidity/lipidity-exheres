@@ -1,0 +1,23 @@
+# Copyright 2015 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require pypi
+require setup-py [ import=setuptools blacklist='3' test=nose ]
+
+SUMMARY="Automatically sync your bank's data with ledger"
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-python/mock
+    run:
+        dev-python/ofxclient
+        dev-python/ofxparse
+"
+
+RESTRICT="test"
+

@@ -1,0 +1,15 @@
+# Copyright 2015 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require pypi
+require setup-py [ import=setuptools test=nose ]
+
+SUMMARY="ofxhome.com financial institution lookup REST client"
+
+LICENCES="MIT"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+RESTRICT="test"
+
