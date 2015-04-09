@@ -19,9 +19,9 @@ DEPENDENCIES="
 WORK="${WORK%/*}/source"
 
 src_install() {
-    insinto /usr/include
+    insinto /usr/$(exhost --target)/include
     doins utf8.h
-    insinto /usr/include/utf8
+    insinto /usr/$(exhost --target)/include/utf8
     doins utf8/{checked,unchecked,core}.h
 }
 
