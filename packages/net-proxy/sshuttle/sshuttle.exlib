@@ -40,8 +40,8 @@ src_install(){
 
     exeinto "$(python_get_sitedir)"/${PN}
     doexe ${PN}
-    dodir /usr/bin
-    dosym "$(python_get_sitedir)"/${PN}/${PN} /usr/bin/${PN}
+    dodir /usr/$(exhost --target)/bin
+    dosym "$(python_get_sitedir)"/${PN}/${PN} /usr/$(exhost --target)/bin/${PN}
 
     doman Documentation/${PN}.8
 
