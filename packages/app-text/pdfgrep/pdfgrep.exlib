@@ -18,7 +18,9 @@ ${HOMEPAGE}/manpage.html   [[ description = [ Man page ] ]]
 LICENCES="GPL-3"
 SLOT="0"
 # TODO MYOPTIONS="unac [[ description = [ Use libunac ] ]]"
-MYOPTIONS=""
+MYOPTIONS="bash-completion zsh-completion"
+
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( 'bash-completion' 'zsh-completion' )
 
 DEPENDENCIES="
     build:
