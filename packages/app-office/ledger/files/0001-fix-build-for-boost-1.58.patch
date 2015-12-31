@@ -1,0 +1,39 @@
+From a1cb25ad2d9a98ea9ec0bb3ee27fe3cde6046434 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Johann=20Kl=C3=A4hn?= <kljohann@gmail.com>
+Date: Sun, 10 May 2015 13:41:26 +0200
+Subject: [PATCH] fix build for boost 1.58
+
+---
+ src/filters.cc   | 2 +-
+ src/iterators.cc | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/filters.cc b/src/filters.cc
+index 2f97a0e..b6530c0 100644
+--- a/src/filters.cc
++++ b/src/filters.cc
+@@ -707,7 +707,7 @@ namespace {
+     insert_prices_in_map(price_map_t& _all_prices)
+       : all_prices(_all_prices) {}
+ 
+-    void operator()(datetime_t& date, const amount_t& price) {
++    void operator()(const datetime_t& date, const amount_t& price) {
+       all_prices.insert(price_map_t::value_type(date, price));
+     }
+   };
+diff --git a/src/iterators.cc b/src/iterators.cc
+index 21bec5d..0225e21 100644
+--- a/src/iterators.cc
++++ b/src/iterators.cc
+@@ -96,7 +96,7 @@ namespace {
+       TRACE_DTOR(create_price_xact);
+     }
+ 
+-    void operator()(datetime_t& date, const amount_t& price) {
++    void operator()(const datetime_t& date, const amount_t& price) {
+       xact_t * xact;
+       string   symbol = price.commodity().symbol();
+ 
+-- 
+2.6.4
+

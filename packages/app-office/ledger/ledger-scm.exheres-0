@@ -1,0 +1,8 @@
+# Copyright 2015 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+require ledger
+
+SLOT="0"
+PLATFORMS="~amd64"
+

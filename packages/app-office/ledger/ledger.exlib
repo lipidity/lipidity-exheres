@@ -1,0 +1,31 @@
+# Copyright 2015 Ankur Kothari
+# Distributed under the terms of the GNU General Public License v2
+
+if ever is_scm; then
+    MY_GITHUB=( branch=next )
+else
+    MY_GITHUB=( tag=v${PV} )
+fi
+
+require github [ "${MY_GITHUB[@]}" ] cmake [ api=2 ]
+
+SUMMARY="A double-entry accounting system with a command-line reporting interface"
+#DESCRIPTION=""
+HOMEPAGE="http://ledger-cli.org/"
+#DOWNLOADS=""
+
+LICENCES="BSD-3"
+# TODO python docs
+#MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-lang/python:*
+        dev-scm/git
+    build+run:
+        dev-libs/boost:=
+        dev-libs/gmp:=
+        dev-libs/mpfr:=
+        dev-libs/utfcpp
+"
+

@@ -1,27 +1,13 @@
 # Copyright 2015 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
-require github [ tag=v${PV} ] cmake [ api=2 ]
+require ledger
 
-SUMMARY="A double-entry accounting system with a command-line reporting interface"
-#DESCRIPTION=""
-HOMEPAGE="http://ledger-cli.org/"
-#DOWNLOADS=""
-
-LICENCES="BSD-3"
 SLOT="0"
 PLATFORMS="~amd64"
-# TODO python docs
-#MYOPTIONS=""
 
-DEPENDENCIES="
-    build:
-        dev-lang/python:*
-        dev-scm/git
-    build+run:
-        dev-libs/boost:=
-        dev-libs/gmp:=
-        dev-libs/mpfr:=
-        dev-libs/utfcpp
-"
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}/0001-Convert-boost-optional-objects-to-bool-explicitly.patch"
+    "${FILES}/0001-fix-build-for-boost-1.58.patch"
+)
 
