@@ -25,6 +25,8 @@ DEPENDENCIES="
     build+run:
         dev-libs/boost:=
         dev-libs/gmp:=
+        dev-libs/icu:= [[ description = [ automagically detects boost regex + icu ] ]]
+        dev-libs/libedit [[ description = [ automagically searches for libedit/readline ] ]]
         dev-libs/mpfr:=
         dev-libs/utfcpp
 "
