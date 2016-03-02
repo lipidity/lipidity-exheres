@@ -24,13 +24,26 @@ DEPENDENCIES="
 # unwritten:
 # libsplashy and splashutils for user space splash
 
-DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-compress )
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/gcc-5.patch
+)
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-compress
+    --disable-resume-static
+    --disable-static
+)
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'gcrypt encrypt' threads )
 
-export_exlib_phases pkg_preinst
+export_exlib_phases src_install pkg_preinst
+
+suspend-utils_src_install() {
+    edo mkdir "${IMAGE}/etc"
+    default
+}
 
 suspend-utils_pkg_preinst(){
-    edo rmdir "${IMAGE}/dev"
+    nonfatal edo rmdir "${IMAGE}/dev"
     default
 }
 

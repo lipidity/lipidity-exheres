@@ -1,0 +1,97 @@
+Source: Debian, https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=778159
+Upstream: no, seems inactive
+Reason: fix build with gcc-5
+
+Description: Fixes for new inline semantics related to GCC 5
+GCC 5 defaults to C99. C99's extern inline is equivalent to C89's inline. 
+.
+See "Different semantics for inline functions",
+https://gcc.gnu.org/gcc-5/porting_to.html
+
+Author: Andrew James <andrew.james@hp.com>
+Bug-Debian: https://bugs.debian.org/778159
+Forwarded: no
+
+diff --git a/Makefile.am b/Makefile.am
+index 6786e20..941adb6 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -68,7 +68,8 @@ AM_CFLAGS=\
+ 	-DS2RAM \
+ 	-D_LARGEFILE64_SOURCE \
+ 	$(LZO_CFLAGS) \
+-	$(LIBGCRYPT_CFLAGS)
++	$(LIBGCRYPT_CFLAGS) \
++	-std=gnu99
+ 
+ common_s2disk_libs=\
+ 	$(LZO_LIBS) \
+diff --git a/bootsplash.c b/bootsplash.c
+index cfc5d45..5338f80 100644
+--- a/bootsplash.c
++++ b/bootsplash.c
+@@ -93,7 +93,7 @@ void bootsplash_switch_to(void)
+ 	}
+ }
+ 
+-inline int bootsplash_progress(int p)
++extern inline int bootsplash_progress(int p)
+ {
+ 	char buf[MAX_LINE_SIZE];
+ 
+diff --git a/loglevel.c b/loglevel.c
+index 2213cbf..3b9187d 100644
+--- a/loglevel.c
++++ b/loglevel.c
+@@ -16,7 +16,7 @@
+ static FILE *printk_file;
+ static int proc_mounted = 0;
+ 
+-inline void open_printk(void)
++extern inline void open_printk(void)
+ {
+ 	struct stat stat_buf;
+ 	char *procname = "/proc/sys/kernel/printk";
+@@ -32,7 +32,7 @@ inline void open_printk(void)
+         printk_file = fopen(procname, "r+");
+ }
+ 
+-inline int get_kernel_console_loglevel(void)
++extern inline int get_kernel_console_loglevel(void)
+ {
+         int level = -1;
+ 
+@@ -43,7 +43,7 @@ inline int get_kernel_console_loglevel(void)
+         return level;
+ }
+ 
+-inline void set_kernel_console_loglevel(int level)
++extern inline void set_kernel_console_loglevel(int level)
+ {
+         if (printk_file) {
+                 rewind(printk_file);
+@@ -53,7 +53,7 @@ inline void set_kernel_console_loglevel(int level)
+ 
+ }
+ 
+-inline void close_printk(void)
++extern inline void close_printk(void)
+ {
+         if (printk_file)
+                 fclose(printk_file);
+diff --git a/loglevel.h b/loglevel.h
+index e042ae3..cff1a8f 100644
+--- a/loglevel.h
++++ b/loglevel.h
+@@ -4,7 +4,7 @@
+  * (c) 2007 Tim Dijkstra
+  */
+ 
+-inline void open_printk(void);
+-inline int get_kernel_console_loglevel(void);
+-inline void set_kernel_console_loglevel(int level);
+-inline void close_printk(void);
++extern inline void open_printk(void);
++extern inline int get_kernel_console_loglevel(void);
++extern inline void set_kernel_console_loglevel(int level);
++extern inline void close_printk(void);

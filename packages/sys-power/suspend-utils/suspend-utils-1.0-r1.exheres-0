@@ -3,5 +3,7 @@
 
 require suspend-utils
 
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.13 ] ]
+
 PLATFORMS="~amd64"
 
