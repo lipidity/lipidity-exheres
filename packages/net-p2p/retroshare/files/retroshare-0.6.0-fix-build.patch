@@ -1,0 +1,115 @@
+From ed867c52bd0497d0017eadc24d0c2cf678efa9e0 Mon Sep 17 00:00:00 2001
+From: Julian Ospald <hasufell@posteo.de>
+Date: Fri, 27 May 2016 18:07:28 +0200
+Subject: [PATCH] Don't hardcode g++ in the toolchain settings
+Upstream: merged, https://github.com/RetroShare/RetroShare/pull/395
+
+Although it's already quite ugly that we overwrite QMAKE_CC like this,
+hardcoding 'g++' can break the build where prefixed versions of
+the toolchain are expected and where QMAKE_CXX is already properly
+defined. So we just use QMAKE_CXX variable here.
+
+This fixes build failures on some distributions, e.g.
+https://galileo.mailstation.de/jenkins/job/lipidity/36/console
+---
+ libbitdht/src/libbitdht.pro             | 6 +++---
+ libretroshare/src/libretroshare.pro     | 6 +++---
+ tests/librssimulator/librssimulator.pro | 6 +++---
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/libbitdht/src/libbitdht.pro b/libbitdht/src/libbitdht.pro
+index a525159..738deea 100644
+--- a/libbitdht/src/libbitdht.pro
++++ b/libbitdht/src/libbitdht.pro
+@@ -29,7 +29,7 @@ debug {
+ 
+ ################################# Linux ##########################################
+ linux-* {
+-	QMAKE_CC = g++
++	QMAKE_CC = $${QMAKE_CXX}
+ }
+ 
+ linux-g++ {
+@@ -64,7 +64,7 @@ win32-x-g++ {
+ ################################# Windows ##########################################
+ 
+ win32 {
+-		QMAKE_CC = g++
++		QMAKE_CC = $${QMAKE_CXX}
+ 		OBJECTS_DIR = temp/obj
+ 		MOC_DIR = temp/moc
+ 		DEFINES *= STATICLIB WIN32_LEAN_AND_MEAN _USE_32BIT_TIME_T
+@@ -89,7 +89,7 @@ win32 {
+ ################################# MacOSX ##########################################
+ 
+ mac {
+-		QMAKE_CC = g++
++		QMAKE_CC = $${QMAKE_CXX}
+ 		OBJECTS_DIR = temp/obj
+ 		MOC_DIR = temp/moc
+ }
+diff --git a/libretroshare/src/libretroshare.pro b/libretroshare/src/libretroshare.pro
+index d01d4c9..d9e64d3 100644
+--- a/libretroshare/src/libretroshare.pro
++++ b/libretroshare/src/libretroshare.pro
+@@ -122,7 +122,7 @@ linux-* {
+ 	CONFIG += link_pkgconfig
+ 
+ 	QMAKE_CXXFLAGS *= -Wall -D_FILE_OFFSET_BITS=64
+-	QMAKE_CC = g++
++	QMAKE_CC = $${QMAKE_CXX}
+ 
+ 	contains(CONFIG, NO_SQLCIPHER) {
+ 		DEFINES *= NO_SQLCIPHER
+@@ -225,7 +225,7 @@ win32-x-g++ {
+ ################################# Windows ##########################################
+ 
+ win32 {
+-	QMAKE_CC = g++
++	QMAKE_CC = $${QMAKE_CXX}
+ 	OBJECTS_DIR = temp/obj
+ 	MOC_DIR = temp/moc
+ 	DEFINES *= WINDOWS_SYS WIN32 STATICLIB MINGW WIN32_LEAN_AND_MEAN _USE_32BIT_TIME_T
+@@ -259,7 +259,7 @@ win32 {
+ ################################# MacOSX ##########################################
+ 
+ mac {
+-		QMAKE_CC = g++
++		QMAKE_CC = $${QMAKE_CXX}
+ 		OBJECTS_DIR = temp/obj
+ 		MOC_DIR = temp/moc
+ 		#DEFINES = WINDOWS_SYS WIN32 STATICLIB MINGW
+diff --git a/tests/librssimulator/librssimulator.pro b/tests/librssimulator/librssimulator.pro
+index 14f1d5c..5211e7e 100644
+--- a/tests/librssimulator/librssimulator.pro
++++ b/tests/librssimulator/librssimulator.pro
+@@ -70,7 +70,7 @@ linux-* {
+ 
+ 	DESTDIR = lib
+ 	QMAKE_CXXFLAGS *= -Wall -D_FILE_OFFSET_BITS=64
+-	QMAKE_CC = g++
++	QMAKE_CC = $${QMAKE_CXX}
+ 
+ 	SSL_DIR = /usr/include/openssl
+ 	UPNP_DIR = /usr/include/upnp
+@@ -143,7 +143,7 @@ win32-x-g++ {
+ ################################# Windows ##########################################
+ 
+ win32 {
+-	QMAKE_CC = g++
++	QMAKE_CC = $${QMAKE_CXX}
+ 	OBJECTS_DIR = temp/obj
+ 	MOC_DIR = temp/moc
+ 	DEFINES *= WINDOWS_SYS WIN32 STATICLIB MINGW WIN32_LEAN_AND_MEAN _USE_32BIT_TIME_T
+@@ -188,7 +188,7 @@ win32 {
+ ################################# MacOSX ##########################################
+ 
+ mac {
+-		QMAKE_CC = g++
++		QMAKE_CC = $${QMAKE_CXX}
+ 		OBJECTS_DIR = temp/obj
+ 		MOC_DIR = temp/moc
+ 		#DEFINES = WINDOWS_SYS WIN32 STATICLIB MINGW
+-- 
+2.8.3
+

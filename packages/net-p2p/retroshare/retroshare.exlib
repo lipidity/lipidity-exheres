@@ -1,90 +1,119 @@
 # Copyright 2013 Ankur Kothari
 # Distributed under the terms of the GNU General Public License v2
 
-require sourceforge [ project=retroshare pn=RetroShare pv=v${PV} suffix=zip ] qmake
+require flag-o-matic
+require github [ user=RetroShare project=RetroShare tag=v${PV} ]
+require qmake [ slot=5 ]
+require gtk-icon-cache freedesktop-desktop
 
-if ! ever is_scm ; then
-    require gtk-icon-cache freedesktop-desktop
-fi
+export_exlib_phases src_configure src_install pkg_postinst pkg_postrm
 
-if ever is_scm ; then
-    SCM_REPOSITORY="svn://svn.code.sf.net/p/${PN}/code"
-    SCM_BRANCH="v0.5.5"
-    require scm-svn
-fi
-
-export_exlib_phases src_configure src_compile src_install
-
-SUMMARY="A decentralized, private and secure commmunication and sharing platform."
+SUMMARY="A decentralized, private and secure commmunication and sharing platform"
 DESCRIPTION="
-RetroShare is basically a platform that establishes encrypted connections between authenticated friends.
-This connection is used for various communication services and filesharing. It is independent of
-any corporate system or central servers, all data is only sent to friends and in some cases
-relayed by them to their friends, making RetroShare a decentralised Social Sharing Network
-designed For the People. Encrypted communication ensures that all shared information is only
-known to you and your friends.
+RetroShare is basically a platform that establishes encrypted connections
+between authenticated friends. This connection is used for various
+communication services and filesharing. It is independent of any corporate
+system or central servers, all data is only sent to friends and in some cases
+relayed by them to their friends, making RetroShare a decentralised Social
+Sharing Network designed For the People. Encrypted communication ensures that
+all shared information is only known to you and your friends.
 
 Communication services in RetroShare:
-    Private chat with friends
-    Private or public chat lobbies, that allow chatting with friends and friends of friends
-    Messages to friends
-    Forums
-    Voice over IP 
+    * Private chat with friends
+    * Private or public chat lobbies, that allow chatting with friends
+      and friends of friends
+    * Messages to friends
+    * Forums
+    * Voice over IP
 "
+HOMEPAGE="https://retroshare.github.io/"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS=""
+MYOPTIONS="
+    ( providers: libressl openssl ) [[ number-selected = exactly-one ]]
+    ( providers: ffmpeg libav ) [[ number-selected = exactly-one ]]
+"
 
 DEPENDENCIES="
     build:
         virtual/pkg-config
     build+run:
-        dev-libs/openssl
+        app-crypt/sqlcipher
+        dev-libs/libxml2:2.0
+        dev-libs/libxslt
+        dev-libs/protobuf
         gnome-desktop/libgnome-keyring:1
+        media-libs/opencv
+        media-libs/speex
+        media-libs/speexdsp
+        net-libs/libmicrohttpd
+        net-libs/libssh
         net-libs/libupnp
+        net-misc/curl
+        x11-libs/libX11
         x11-libs/libXScrnSaver
-        x11-libs/qt:4
+        x11-libs/qtbase:5
+        x11-libs/qtmultimedia:5
+        x11-libs/qttools:5
+        x11-libs/qtx11extras:5
+        providers:ffmpeg? ( media/ffmpeg )
+        providers:libav? ( media/libav )
+        providers:libressl? ( dev-libs/libressl:= )
+        providers:openssl? ( dev-libs/openssl )
 "
 
-if ! ever is_scm; then
-    WORK=${WORKBASE}/${PNV%[a-z]}/src
-fi
-
-RS_SRC_DIRS=( libbitdht openpgpsdk libretroshare retroshare-gui )
+EQMAKE_PARAMS=(
+    "CONFIG-=debug"
+    "CONFIG+=release"
+    "CONFIG-=c++11"
+)
 
 retroshare_src_configure(){
-    for dir in ${RS_SRC_DIRS[@]} ; do
-        edo pushd ${dir}/src
-        eqmake ${dir}.pro
-        popd
-    done
-}
+    # weird speex failures, also see
+    # https://github.com/RetroShare/RetroShare/issues/393
+    append-flags -DHAVE_STDINT_H
 
-retroshare_src_compile() {
-    for dir in ${RS_SRC_DIRS[@]} ; do
-        emake -C ${dir}/src
-    done
+    # fix hardcoded extension directory
+    edo sed -i \
+        -e "s|/usr/lib/retroshare/extensions6/|/usr/$(exhost --target)/lib/${PN}/extensions6/|" \
+        libretroshare/src/rsserver/rsinit.cc
+
+    eqmake \
+        BIN_DIR="/usr/$(exhost --target)/bin" \
+        LIB_DIR="/usr/$(exhost --target)/lib" \
+        PLUGIN_DIR="/usr/$(exhost --target)/lib/${PN}/extensions6/" \
+        INC_DIR="/usr/$(exhost --target)/include" \
+        RetroShare.pro
 }
 
 retroshare_src_install() {
-    dobin retroshare-gui/src/RetroShare
+    emake INSTALL_ROOT="${IMAGE}" install
 
-    insinto /usr/share/RetroShare
-    # used to bootstrap DHT
-    doins libbitdht/src/bitdht/bdboot.txt
-    # skins
-    doins -r retroshare-gui/src/qss
+    # overwrite desktop file
+    insinto /usr/share/applications
+    hereins ${PN}06.desktop <<EOF
+[Desktop Entry]
+Version=1.0
+Name=RetroShare06
+Comment=Securely share files with your friends
+Exec=RetroShare06
+Icon=retroshare06
+Terminal=false
+Type=Application
+Categories=Network;
+EOF
+}
 
-    if ! ever is_scm; then
-        # icon
-        insinto /usr/share/pixmaps
-        #doins data/${PN}.png
-        doins data/${PN}.xpm
+retroshare_pkg_postinst() {
+    freedesktop-mime_pkg_postinst
+    freedesktop-desktop_pkg_postinst
+    gtk-icon-cache_pkg_postinst
+}
 
-        # desktop file
-        insinto /usr/share/applications
-        doins data/${PN}.desktop
-    fi
+retroshare_pkg_postrm() {
+    freedesktop-mime_pkg_postrm
+    freedesktop-desktop_pkg_postrm
+    gtk-icon-cache_pkg_postrm
 }
 

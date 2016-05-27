@@ -5,3 +5,7 @@ require retroshare
 
 PLATFORMS="~amd64"
 
+DEFAULT_SRC_PREPARE_PATCHES=(
+    "${FILES}"/${PNV}-fix-build.patch
+)
+
