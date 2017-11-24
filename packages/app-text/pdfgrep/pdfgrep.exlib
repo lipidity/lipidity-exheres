@@ -6,7 +6,7 @@ require sourceforge [ suffix=tar.gz ]
 SUMMARY="Search for text in pdf files"
 
 if ever is_scm ; then
-    SCM_REPOSITORY="git://gitlab.com/pdfgrep/pdfgrep.git"
+    SCM_REPOSITORY="https://gitlab.com/pdfgrep/pdfgrep.git"
     DOWNLOADS=""
     require scm-git
 fi
