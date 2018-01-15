@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 require github [ user=alastair pn=python-${PN} tag=v${PV} ]
-require setup-py [ import=distutils blacklist='3' ]
+require setup-py [ import=distutils ]
 
 ever is_scm || require pypi
 
