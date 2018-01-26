@@ -4,7 +4,7 @@
 #   Copyright 2008-2009 Vöröskői András <voroskoi@gmail.com>
 #   Copyright 2009 Saleem Abdulrasool <compnerd@compnerd.org>
 
-require sourceforge
+require sourceforge [ suffix=tar.xz ]
 
 export_exlib_phases src_install
 
