@@ -3,5 +3,5 @@
 
 require musicbrainzngs
 
-PLATFORMS="~amd64 ~armv7"
+PLATFORMS="~amd64 ~armv7 ~armv8"
 
